@@ -9,6 +9,8 @@ public class ClickManager : MonoBehaviour
     public int massPerClick = 1;
     public int upgradeCost = 10;
     public int upgradeLevel = 0;
+
+    public GrowthStages growth;
     
     public void OnClick()
     {
@@ -25,6 +27,7 @@ public class ClickManager : MonoBehaviour
         massPerClick *= 2;
         upgradeCost *= 3;
         UpdateUI();
+        growth.Apply(upgradeLevel);
     }
 
     public void UpdateUI()
