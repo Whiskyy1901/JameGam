@@ -1,22 +1,37 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GrowthStages : MonoBehaviour
 {
+    [System.Serializable]
+    public class Stage
+    {
+        public string name = "Stage";
+        public int startLevel;
+        public float guyScale = 1f;
+        public float camSize = 5f;
+
+        [Header("Visuals (leave empty to skip)")]
+        public Sprite guySprite;
+        public Color guyColor = Color.white;
+        public Sprite backgroundSprite;
+        public Color backgroundColor = Color.white;
+        public Color panelColor = Color.white;
+        public Color textColor = Color.black;
+    }
+
+    [Header("Scene references")]
     public Transform guy;
     public SpriteRenderer guyRenderer;
     public Camera cam;
+    public SpriteRenderer backgroundRenderer;
     public TMP_Text stageText;
+    public TMP_Text[] allTexts;
+    public Image[] panelImages;
 
-    public int[] levelThresholds = { 0, 2, 3, 5, 6 };
-    public string[] stageNames = { "Little Guy", "Building", "Planet", "Star", "Black Hole" };
-    public float[] guyScales = { 1f, 3f, 8f, 20f, 40f };
-    public float[] camSizes = { 5f, 10f, 25f, 60f, 120f };
-    public Color[] bgColors = {
-        new Color(0.95f, 0.95f, 0.95f), new Color(0.5f, 0.7f, 1f),
-        new Color(0.1f, 0.2f, 0.5f), new Color(0.05f, 0.05f, 0.2f), Color.black };
-    public Color[] guyColors = {
-        Color.red, Color.gray, Color.green, Color.yellow, Color.black };
+    public Stage[] stages;
+    public float lerpSpeed = 2f;
 
     float targetScale, targetCam;
 
@@ -24,20 +39,33 @@ public class GrowthStages : MonoBehaviour
 
     public void Apply(int upgradeLevel)
     {
-        int stage = 0;
-        for (int i = 0; i < levelThresholds.Length; i++)
-            if (upgradeLevel >= levelThresholds[i]) stage = i;
+        int index = 0;
+        for (int i = 0; i < stages.Length; i++)
+            if (upgradeLevel >= stages[i].startLevel) index = i;
 
-        targetScale = guyScales[stage];
-        targetCam = camSizes[stage];
-        cam.backgroundColor = bgColors[stage];
-        guyRenderer.color = guyColors[stage];
-        stageText.text = stageNames[stage];
+        Stage s = stages[index];
+        targetScale = s.guyScale;
+        targetCam = s.camSize;
+
+        if (s.guySprite != null) guyRenderer.sprite = s.guySprite;
+        guyRenderer.color = s.guyColor;
+
+        cam.backgroundColor = s.backgroundColor;
+        if (backgroundRenderer != null)
+        {
+            if (s.backgroundSprite != null) backgroundRenderer.sprite = s.backgroundSprite;
+            backgroundRenderer.color = s.backgroundColor;
+        }
+
+        foreach (var img in panelImages) if (img != null) img.color = s.panelColor;
+        foreach (var t in allTexts) if (t != null) t.color = s.textColor;
+
+        if (stageText != null) stageText.text = s.name;
     }
 
     void Update()
     {
-        guy.localScale = Vector3.Lerp(guy.localScale, Vector3.one * targetScale, Time.deltaTime * 2f);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCam, Time.deltaTime * 2f);
+        guy.localScale = Vector3.Lerp(guy.localScale, Vector3.one * targetScale, Time.deltaTime * lerpSpeed);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCam, Time.deltaTime * lerpSpeed);
     }
 }
