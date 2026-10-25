@@ -11,23 +11,28 @@ public class ClickManager : MonoBehaviour
     public int upgradeLevel = 0;
 
     public GrowthStages growth;
+    public EndingSequence ending;
+    public SoundManager sound;
     
     public void OnClick()
     {
         mass += massPerClick;
+        sound.PlayClick();
         UpdateUI();
     }
 
     public void BuyUpgrade()
     {
-        if(mass < upgradeCost) return;
+        if (mass < upgradeCost) { sound.PlayError(); return; }
 
+        sound.PlayUpgrade();
         mass -= upgradeCost;
         upgradeLevel++;
         massPerClick *= 2;
         upgradeCost *= 3;
         UpdateUI();
         growth.Apply(upgradeLevel);
+        if (upgradeLevel >= 6) ending.Play();
     }
 
     public void UpdateUI()
