@@ -3,34 +3,29 @@
 A small clicker game I made in Unity for the jame gam game jam (Hack Club). The theme was "I'm just a little guy."
 
 You start as a tiny red square. Click to gain mass, buy upgrades, and keep growing.
+# Just a Little Guy
+
+A small clicker game I made in Unity for the jame gam game jam (Hack Club). The theme was "I'm just a little guy."
+
+You start as a tiny red square. Click to gain mass, buy upgrades, and keep growing.
+
+This was later improved for savepoint.hackclub.com
+
+**Play it:** https://whiskyyyy.itch.io/just-a-little-guy
+
 ## How to play
 
-- Click the big button to gain mass.
-- Buy upgrades when you can afford them.
-- Reach the last upgrade to see the ending.
+- Click the **LITTLE** guy to gain **mass**.
+- Spend mass on **EXPANDING** to gain more mass per click and watch the guy grow.
+- Buy **helpers** to earn mass passively.
+- Keep expanding until you swallow everything.
 
-## Built with
-
-- Unity (2D)
-- TextMeshPro for UI
-- Sounds from Kenney's Interface Sounds pack (CC0)
-
-No sprites in this one, just shapes and colors, since I only had a few hours.
-
-{Art files were imported but never used}
-
-## Scripts
-
-- `ClickManager` - mass, clicks, upgrades
-- `GrowthStages` - changes the size, colors, and camera zoom for each stage
-- `EndingSequence` - the black hole ending and restart
-- `UIFeedback` - button pop and greying out the upgrade button
-- `SoundManager` - plays the sound effects
+## Credits
+- Code: Whisky
+- Art: Whisky
+- Music: Whisky
+- SFX: [Kenny](https://kenney.nl/)
 
 ## Running it
 
 Download latest build and extract and run the exe file.
-## Known issues
-
-- Balance is rough. A full run takes about 5 minutes.
-- No save system.
