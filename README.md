@@ -1,8 +1,3 @@
-# Little Guy Clicker
-
-A small clicker game I made in Unity for the jame gam game jam (Hack Club). The theme was "I'm just a little guy."
-
-You start as a tiny red square. Click to gain mass, buy upgrades, and keep growing.
 # Just a Little Guy
 
 A small clicker game I made in Unity for the jame gam game jam (Hack Club). The theme was "I'm just a little guy."
