@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,7 +13,7 @@ public class GrowthStages : MonoBehaviour
         public float guyScale = 1f;
         public float camSize = 5f;
 
-        [Header("Visuals (leave empty to skip)")]
+        [Header("Visuals")]
         public Sprite guySprite;
         public Color guyColor = Color.white;
         public Sprite backgroundSprite;
@@ -34,6 +35,9 @@ public class GrowthStages : MonoBehaviour
     public float lerpSpeed = 2f;
 
     float targetScale, targetCam;
+    
+    public SquashStretch guySquash;
+    float currentScale = 1f;
 
     void Start() => Apply(0);
 
@@ -65,7 +69,16 @@ public class GrowthStages : MonoBehaviour
 
     void Update()
     {
-        guy.localScale = Vector3.Lerp(guy.localScale, Vector3.one * targetScale, Time.deltaTime * lerpSpeed);
+        currentScale = Mathf.Lerp(currentScale, targetScale, Time.deltaTime * lerpSpeed);
+        guy.localScale = Vector3.one * currentScale;
+        if (guySquash != null)
+            guy.localScale = Vector3.Scale(guy.localScale, guySquash.Multiplier);
+
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCam, Time.deltaTime * lerpSpeed);
+    }
+    
+    private void OnParticleSystemStopped()
+    {
+        // play fx
     }
 }

@@ -10,10 +10,10 @@ public class EndingSequence : MonoBehaviour
     public TMP_Text endText;
     public Transform guy;
     public GrowthStages growth;
+    public SoundManager sound;
 
     bool played;
-
-    public SoundManager sound;
+    public bool Played => played;
 
     public void Play()
     {
@@ -26,6 +26,7 @@ public class EndingSequence : MonoBehaviour
     {
         sound.PlayEnding();
         gameUI.interactable = false;
+        gameUI.blocksRaycasts = false;
         yield return new WaitForSeconds(2f);
 
         growth.enabled = false;
